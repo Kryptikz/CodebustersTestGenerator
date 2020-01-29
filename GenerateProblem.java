@@ -1,5 +1,5 @@
 import java.util.*;
-public class generateProblem {
+public class GenerateProblem {
     static final char[] normalAlpha = new char[]{'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
     static final double errorChance = .06;
     public static String[] aristocrat(String plaintext, boolean hint, boolean error) {
