@@ -1,13 +1,14 @@
 import java.util.*;
 import java.io.*;
 public class GenerateTest {
+    static final char[] normalAlpha = new char[]{'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
     static final String quotedir = "quotes";
     static final File texts = new File(quotedir + "/texts.txt");
     static final File authors = new File(quotedir + "/authors.txt");
     public static void makeTest() throws Exception {
         /*
          * TEST FORMAT:
-         * 2-4 aristocrats, 75% chance for hint, 25% chance for errors
+         * 2-4 aristocrats, 30% chance for hint, 25% chance for errors
          * 2-4 patristocrats, 20% chance for no hint
          * 0-1 caesar cipher
          * 2-3 affine cipher, 50% encrypting, 50% decrypting *need to add crib attack after 
@@ -34,12 +35,16 @@ public class GenerateTest {
         
         int numquotes = quotesLength();
         
+        ArrayList<String> answers = new ArrayList<String>();
+        
+        
+        numaristocrats = 20;
         for(int i=0;i<numaristocrats;i++) {
             String[] quote = getQuote((int)(Math.random()*numquotes));
             String plaintext = quote[0];
             String author = quote[1];
             boolean hint = false;
-            if (Math.random()<.75) {
+            if (Math.random()<.30) {
                 hint = true;
             }
             boolean errors = false;
@@ -54,18 +59,30 @@ public class GenerateTest {
             if (errors) {
                 statement = statement + " The plaintext contains errors";
             }
+            answers.add(aristocrat[1]);
             
-            System.out.println("\n\n" + statement + "\n");
-            System.out.println(aristocrat[0]);
-            System.out.println(aristocrat[1]);
+            System.out.println("\n\n" + (i+1) + ": " + statement + "\n");
+            System.out.println(aristocrat[0] + "\n");
             
+            int[] freqtable = getFrequencyTable(aristocrat[0]);
+            for(char c : normalAlpha) {
+                System.out.print(c + "  ");
+            }
+            System.out.println();
+            for(int num : freqtable) {
+                if ((num+"").length()>1) {
+                    System.out.print(num + " ");
+                } else {
+                    System.out.print(num + "  ");
+                }
+            }
             
         }
         
-        
-        
-        
-        
+        System.out.println("\n\n\n\n\n\nAnswers:");
+        for(int i=0;i<answers.size();i++) {
+            System.out.println((i+1) + ": " + answers.get(i));
+        }
         
         
     }
@@ -90,5 +107,21 @@ public class GenerateTest {
         text = tr.readLine().toUpperCase();
         author = ar.readLine();
         return new String[]{text,author};
+    }
+    public static int[] getFrequencyTable(String ciphertext) {
+        int[] ret = new int[26];
+        for(int i=0;i<26;i++) {
+            ret[i]+=freq(ciphertext.toCharArray(), normalAlpha[i]);
+        }
+        return ret;
+    }
+    private static int freq(char[] arr, char c) {
+        int sum = 0;
+        for(char sc : arr) {
+            if (sc == c) {
+                sum++;
+            }
+        }
+        return sum;
     }
 }

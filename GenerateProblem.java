@@ -42,11 +42,14 @@ public class GenerateProblem {
         String hint = "";
         if (hintid == 0) {
             int variant = (int)(Math.random()*4);
-            switch(variant) {
-                case(0): hint = "The first word is " + words[0];
-                case(1): hint = "The second word is " + words[1];
-                case(2): hint = "The third word is " + words[2];
-                case(3): hint = "The last word is " + words[words.length-1];
+            if (variant == 0) {
+                hint = "The first word is " + words[0];
+            } else if (variant == 1) {
+                hint = "The second word is " + words[1];
+            } else if (variant == 2) {
+                hint = "The third word is " + words[2];
+            } else if (variant == 3) {
+                hint = "The last word is " + words[words.length-1];
             }
         } else if (hintid == 1) {
             hint = "The word " + mostfreq + " appears " + getNumWord(freqhigh);
