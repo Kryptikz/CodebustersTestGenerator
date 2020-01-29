@@ -38,7 +38,7 @@ public class GenerateTest {
         ArrayList<String> answers = new ArrayList<String>();
         
         
-        numaristocrats = 20;
+        //numaristocrats = 20;
         for(int i=0;i<numaristocrats;i++) {
             String[] quote = getQuote((int)(Math.random()*numquotes));
             String plaintext = quote[0];
@@ -57,13 +57,11 @@ public class GenerateTest {
                 statement = statement + " HINT: " + aristocrat[2] + ".";
             }
             if (errors) {
-                statement = statement + " The plaintext contains errors";
+                statement = statement + " The plaintext contains errors.";
             }
             answers.add(aristocrat[1]);
-            
             System.out.println("\n\n" + (i+1) + ": " + statement + "\n");
             System.out.println(aristocrat[0] + "\n");
-            
             int[] freqtable = getFrequencyTable(aristocrat[0]);
             for(char c : normalAlpha) {
                 System.out.print(c + "  ");
@@ -76,8 +74,37 @@ public class GenerateTest {
                     System.out.print(num + "  ");
                 }
             }
-            
         }
+        for(int i=0;i<numpatristocrats;i++) {
+            String[] quote = getQuote((int)(Math.random()*numquotes));
+            String plaintext = quote[0];
+            String author = quote[1];
+            boolean hint = false;
+            if (Math.random()<.30) {
+                hint = true;
+            }
+            String[] patristocrat = GenerateProblem.patristocrat(plaintext, hint);
+            String statement = "Solve this patristocrat written by " + author + ".";
+            if (hint) {
+                statement = statement + " HINT: " + patristocrat[2] + ".";
+            }
+            answers.add(patristocrat[1]);
+            System.out.println("\n\n" + (i+1) + ": " + statement + "\n");
+            System.out.println(patristocrat[0] + "\n");
+            int[] freqtable = getFrequencyTable(patristocrat[0]);
+            for(char c : normalAlpha) {
+                System.out.print(c + "  ");
+            }
+            System.out.println();
+            for(int num : freqtable) {
+                if ((num+"").length()>1) {
+                    System.out.print(num + " ");
+                } else {
+                    System.out.print(num + "  ");
+                }
+            }
+        }
+        
         
         System.out.println("\n\n\n\n\n\nAnswers:");
         for(int i=0;i<answers.size();i++) {

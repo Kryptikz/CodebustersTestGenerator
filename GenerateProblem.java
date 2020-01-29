@@ -19,6 +19,13 @@ public class GenerateProblem {
         String[] arist = aristocrat(plaintext, hint, false);
         String ciphertext = arist[0].replaceAll("\\s+", "");
         String newcipher = "";
+        String temp = "";
+        for(char c : ciphertext.toCharArray()) {
+            if (c >=65 && c <= 90) {
+                temp = temp + c;
+            }
+        }
+        ciphertext = temp;
         for(int i=0;i<ciphertext.length();i++) {
             newcipher = newcipher + ciphertext.toCharArray()[i];
             if (i>0 && i%5 == 0) {
