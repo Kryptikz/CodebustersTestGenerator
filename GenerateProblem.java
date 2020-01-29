@@ -43,6 +43,15 @@ public class GenerateProblem {
         return caes;
     }
     
+    public static String[] affineDecode(String plaintext) {
+        //return format: String[]{ciphertext(String), plaintext(String), a(int), b(int)}
+        
+        
+        
+        
+        return null;
+    }
+    
     public static String shift(String text, int num) {
         char[] orig = text.toCharArray();
         char[] shifted = new char[orig.length];
