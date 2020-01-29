@@ -13,6 +13,44 @@ public class GenerateProblem {
         String[] arist = new String[]{ciphertext,plaintext,hintstr,""+error};
         return arist; 
     }
+    
+    public static String[] patristocrat(String plaintext, boolean hint) {
+        //return format: String[]{ciphertext(String), plaintext(String), hint(String)}
+        String[] arist = aristocrat(plaintext, hint, false);
+        String ciphertext = arist[0].replaceAll("\\s+", "");
+        String newcipher = "";
+        for(int i=0;i<ciphertext.length();i++) {
+            newcipher = newcipher + ciphertext.toCharArray()[i];
+            if (i>0 && i%5 == 0) {
+                newcipher = newcipher + " ";
+            }
+        }
+        return new String[]{newcipher,arist[1],arist[2]};
+    }
+    
+    public static String[] caesar(String plaintext) {
+        //return format: String[]{ciphertext(String), plaintext(String)}
+        int shift = (int)(Math.random()*25)+1;
+        String ciphertext = shift(plaintext, shift); 
+        String[] caes = new String[]{ciphertext, plaintext};
+        return caes;
+    }
+    
+    public static String shift(String text, int num) {
+        char[] orig = text.toCharArray();
+        char[] shifted = new char[orig.length];
+        for(int i=0;i<shifted.length;i++) {
+            if ((int)orig[i] >= 65 && (int)orig[i] <= 90) {
+                int letter = (int)orig[i]-65;
+                int newletter = (letter+num)%26;
+                char newchar = (char)(newletter+65);
+                shifted[i] = newchar;
+            } else {
+                shifted[i] = orig[i];
+            }
+        }
+        return new String(shifted);
+    }
 
     public static String generateAristocratHint(String plaintext) {
         /*
@@ -57,11 +95,6 @@ public class GenerateProblem {
             hint = "The two most common letters are " + mostCommonTwo(plaintext)[0] + " and " + mostCommonTwo(plaintext)[1];
         }
         return hint;
-    }
-
-    public static void test() {
-        char c = 'A';
-        System.out.println((int)c);
     }
 
     private static char[] mostCommonTwo(String plaintext) {
