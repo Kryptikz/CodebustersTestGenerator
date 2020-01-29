@@ -145,9 +145,9 @@ public class GenerateProblem {
     public static String encryptMono(String plaintext, char[] key) {
         String ciphertext = plaintext;
         for(int i=0;i<26;i++) {
-            ciphertext = replace(ciphertext, normalAlpha[i], key[i]);
+            ciphertext = replace(ciphertext, normalAlpha[i], (char)((int)key[i]+32));
         }
-        return ciphertext;
+        return ciphertext.toUpperCase();
     }
 
     public static String replace(String original, char toReplace, char replaceWith) {
