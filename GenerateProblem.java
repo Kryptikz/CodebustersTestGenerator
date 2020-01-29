@@ -71,7 +71,7 @@ public class GenerateProblem {
     private static char[] mostCommonTwo(String plaintext) {
         int[] freqs = new int[26];
         for(char c : plaintext.toCharArray()) {
-            if (c != ' ') {
+            if ((int)c >= 65 && (int)c <= 90) {
                 freqs[(int)(c)-65]++;
             }
         }
