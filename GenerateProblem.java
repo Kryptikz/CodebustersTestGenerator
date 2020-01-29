@@ -34,17 +34,10 @@ public class GenerateProblem {
         int hintid = 0;
         if (mostfreq != null) {
             int choice = (int)(Math.random()*3);
-            switch(choice) {
-                case(0): hintid = 0;
-                case(1): hintid = 1;
-                case(2): hintid = 2;
-            }
+            hintid = choice;
         } else {
             int choice = (int)(Math.random()*2);
-            switch(choice) {
-                case(0): hintid = 0;
-                case(1): hintid = 2;
-            }
+            hintid = choice*2;
         }
         String hint = "";
         if (hintid == 0) {
