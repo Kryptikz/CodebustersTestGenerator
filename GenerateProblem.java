@@ -43,13 +43,32 @@ public class GenerateProblem {
         return caes;
     }
     
-    public static String[] affineDecode(String plaintext) {
+    public static String[] affine(String plaintext) {
         //return format: String[]{ciphertext(String), plaintext(String), a(int), b(int)}
+        int a = (int)(Math.random()*26);
+        while (a % 2 == 0 || a % 13 == 0) {
+            a = (int)(Math.random()*26);
+        }
         
+        int b = (int)(Math.random()*25) + 1;
         
+        char[] orig = plaintext.toCharArray();
+        char[] nw = new char[orig.length];
         
+        for (int i = 0 ; i < orig.length ; i++) {
+            if ((orig[i] - 'A') >= 0 && (orig[i] - 'A') <= 25) {
+                char num = (char) (((orig[i] - 'A') * a + b) % 26 + 'A');
+                
+                nw[i] = num;
+            }
+            else {
+                nw[i] = orig[i];
+            }
+        }
         
-        return null;
+        String ct = new String(nw);
+        
+        return new String[]{ct, plaintext, Integer.toString(a), Integer.toString(b)};
     }
     
     public static String shift(String text, int num) {

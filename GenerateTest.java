@@ -37,9 +37,11 @@ public class GenerateTest {
         
         ArrayList<String> answers = new ArrayList<String>();
         
+        int t = 0;
         
         //numaristocrats = 20;
         for(int i=0;i<numaristocrats;i++) {
+            t++;
             String[] quote = getQuote((int)(Math.random()*numquotes));
             String plaintext = quote[0];
             String author = quote[1];
@@ -60,7 +62,7 @@ public class GenerateTest {
                 statement = statement + " The plaintext contains errors.";
             }
             answers.add(aristocrat[1]);
-            System.out.println("\n\n" + (i+1) + ": " + statement + "\n");
+            System.out.println("\n\n" + t + ": " + statement + "\n");
             System.out.println(aristocrat[0] + "\n");
             int[] freqtable = getFrequencyTable(aristocrat[0]);
             for(char c : normalAlpha) {
@@ -75,7 +77,9 @@ public class GenerateTest {
                 }
             }
         }
+        
         for(int i=0;i<numpatristocrats;i++) {
+            t++;
             String[] quote = getQuote((int)(Math.random()*numquotes));
             String plaintext = quote[0];
             String author = quote[1];
@@ -89,7 +93,7 @@ public class GenerateTest {
                 statement = statement + " HINT: " + patristocrat[2] + ".";
             }
             answers.add(patristocrat[1]);
-            System.out.println("\n\n" + (i+1) + ": " + statement + "\n");
+            System.out.println("\n\n" + t + ": " + statement + "\n");
             System.out.println(patristocrat[0] + "\n");
             int[] freqtable = getFrequencyTable(patristocrat[0]);
             for(char c : normalAlpha) {
@@ -103,6 +107,24 @@ public class GenerateTest {
                     System.out.print(num + "  ");
                 }
             }
+        }
+        
+        for (int i = 0 ; i < numaffine ; i++) {
+            t++;
+            String[] quote = getQuote((int)(Math.random()*numquotes));
+            String plaintext = quote[0];
+            String author = quote[1];
+            String[] aff = GenerateProblem.affine(plaintext);
+            String probText;
+            if (Math.random() <= 0.5) {
+                probText = "Encode this quote by " + author + " using the affine cipher with a = " + aff[2] + " and b = " + aff[3] + ":\n\n" + aff[1];
+                answers.add(aff[0]);
+            }
+            else {
+                probText = "Decode this quote by " + author + " using the affine cipher:\n\n" + aff[0];
+                answers.add(aff[1]);
+            }
+            System.out.println("\n" + (t) + ": " + probText);
         }
         
         
