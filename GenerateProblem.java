@@ -1,4 +1,6 @@
 import java.util.*;
+import java.io.*;
+
 public class GenerateProblem {
     static final char[] normalAlpha = new char[]{'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
     static final double errorChance = .06;
@@ -71,7 +73,46 @@ public class GenerateProblem {
         return new String[]{ct, plaintext, Integer.toString(a), Integer.toString(b)};
     }
     
-    
+    public static String[] hillMatrix(String plaintext) {
+        TreeMap<Integer, Integer> dm = new TreeMap<Integer,Integer>();
+        dm.put(1, 1);
+        dm.put(3, 9);
+        dm.put(5, 21);
+        dm.put(7, 15);
+        dm.put(9, 3);
+        dm.put(11, 19);
+        dm.put(15, 7);
+        dm.put(17, 23);
+        dm.put(19, 11);
+        dm.put(21, 5);
+        dm.put(23, 17);
+        dm.put(25, 25);
+        //Return format: String[]{key, decryption key}
+        String[] valid = {"ABLE","ABLY","ADZE","ALTO","ARTS","AXLE","BASH","BAWD","BEAR","BEEN","BEEP","BEER","BIND","BIRD","BITT","BORN","BOWL","BRAT","BULB","BUSH","DAFT","DASH","DAUB","DEAD","DEAL","DEAR","DELL","DIED","DIET","DIRT","DISH","DOTH","DOWN","DUFF","DULL","DYED","DYER","ELLS","EXPO","FACT","FALL","FAUX","FEAR","FIND","FISH","FIZZ","FLEX","FLOP","FOIL","FOOD","FOOT","FUZZ","HAIR","HARP","HASH","HEAR","HEIR","HIGH","HOAR","HOER","HOOF","HOWL","HUED","IDLY","IFFY","JAIL","JINX","JOLT","JUMP","JUST","LAID","LAIR","LAND","LEAD","LEAR","LEWD","LIMN","LIMP","LISP","LOLL","LOON","LOOP","LORD","LULL","NEXT","ODDS","ONLY","OPTS","PAID","PANT","PART","PAST","PEAL","PEER","PELF","PELT","PEND","PENT","PEON","PILL","PINT","PITH","PLED","PLOD","POET","POMP","POUT","PUFF","PULL","PUMP","RAFT","RAND","RANT","RAPT","RASH","RASP","REAP","REEL","REIN","RIFF","ROOF","RUST","TAIL","TAMP","TARP","TART","TEXT","TIED","TINT","TOAD","TOED","TOLL","TURN","TWIT","VAMP","VEAR","VIED"};
+        String key = valid[(int) (Math.random() * valid.length)];
+        char[] temp = key.toCharArray();
+        int[] vals = new int[4];
+        for (int i = 0 ; i < 4 ; i++) {
+            vals[i] = (temp[i] - 'A');
+        }
+        int[] nv = new int[4];
+        nv[0] = vals[2];
+        nv[2] = vals[0];
+        nv[1] = (26 - vals[1]) % 26;
+        nv[3] = (26 - vals[3]) % 26;
+        int det = Math.abs((vals[3] - vals[0]) - (vals[2] - vals[1]));
+        int dmnt = dm.get(det);
+        int[] ns = new int[4];
+        for (int i = 0 ; i < 4 ; i++) {
+            ns[i] = (nv[i] * dmnt) % 26;
+        }
+        char[] tmp = new char[4];
+        for (int i = 0 ; i < 4 ; i++) {
+            tmp[i] = (char) (ns[i] + 'A');
+        }
+        String s = new String(tmp);
+        return new String[]{key, s};
+    }
     
     public static String shift(String text, int num) {
         char[] orig = text.toCharArray();
