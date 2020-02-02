@@ -71,6 +71,8 @@ public class GenerateProblem {
         return new String[]{ct, plaintext, Integer.toString(a), Integer.toString(b)};
     }
     
+    
+    
     public static String shift(String text, int num) {
         char[] orig = text.toCharArray();
         char[] shifted = new char[orig.length];

@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+
 public class GenerateTest {
     static final char[] normalAlpha = new char[]{'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
     static final String quotedir = "quotes";
@@ -37,6 +38,8 @@ public class GenerateTest {
         
         ArrayList<String> answers = new ArrayList<String>();
         
+        ArrayList<String> testStrings = new ArrayList<String>();
+        
         int t = 0;
         
         //numaristocrats = 20;
@@ -62,8 +65,10 @@ public class GenerateTest {
                 statement = statement + " The plaintext contains errors.";
             }
             answers.add(aristocrat[1]);
-            System.out.println("\n\n" + t + ": " + statement + "\n");
-            System.out.println(aristocrat[0] + "\n");
+            String testString = "";
+            testString += "" + statement + "\n";
+            testString += "\n" + aristocrat[0] + "\n";
+            testStrings.add(testString);
             int[] freqtable = getFrequencyTable(aristocrat[0]);
             for(char c : normalAlpha) {
                 System.out.print(c + "  ");
@@ -93,20 +98,23 @@ public class GenerateTest {
                 statement = statement + " HINT: " + patristocrat[2] + ".";
             }
             answers.add(patristocrat[1]);
-            System.out.println("\n\n" + t + ": " + statement + "\n");
-            System.out.println(patristocrat[0] + "\n");
+            String testString = "";
+            testString += "" + statement + "\n";
+            testString += "\n" + patristocrat[0] + "\n";
+            
             int[] freqtable = getFrequencyTable(patristocrat[0]);
             for(char c : normalAlpha) {
-                System.out.print(c + "  ");
+                testString += c + "  ";
             }
-            System.out.println();
+            testString += "\n";
             for(int num : freqtable) {
                 if ((num+"").length()>1) {
-                    System.out.print(num + " ");
+                    testString += num + " ";
                 } else {
-                    System.out.print(num + "  ");
+                    testString += num + "  ";
                 }
             }
+            testStrings.add(testString);
         }
         
         for (int i = 0 ; i < numaffine ; i++) {
@@ -124,14 +132,29 @@ public class GenerateTest {
                 probText = "Decode this quote by " + author + " using the affine cipher:\n\n" + aff[0];
                 answers.add(aff[1]);
             }
-            System.out.println("\n" + (t) + ": " + probText);
+            
+            String testString = "";
+            testString = probText;
+            testStrings.add(testString);
         }
         
+        ArrayList<String[]> testPairs = new ArrayList<String[]>();
+        for (int i = 0 ; i < testStrings.size() ; i++) {
+            testPairs.add(new String[]{testStrings.get(i), answers.get(i)});
+        }
+        
+        Collections.shuffle(testStrings);
+        
+        for (int i = 0 ; i < testPairs.size() ; i++) {
+            System.out.println("\n\n" + (i + 1) + ": " + testPairs.get(i)[0]);
+        }
         
         System.out.println("\n\n\n\n\n\nAnswers:");
         for(int i=0;i<answers.size();i++) {
-            System.out.println((i+1) + ": " + answers.get(i));
+            System.out.println((i+1) + ": " + testPairs.get(i)[1]);
         }
+        
+        
         
         
     }
