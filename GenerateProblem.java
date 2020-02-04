@@ -74,7 +74,7 @@ public class GenerateProblem {
     }
     
     public static String[] polluxAndMorbit(String plaintext){
-        System.out.println(plaintext);
+        //System.out.println(plaintext);
         String morseText = morse(plaintext);
         String ct = "";
         String hintText = "";
@@ -117,7 +117,7 @@ public class GenerateProblem {
                 ct += key[num][0];
             }
         }
-        System.out.println(ct);
+        //System.out.println(ct);
         int hintNum = (int)(Math.random()*2)+3;
         int[] usedHints = new int[hintNum];
         for(int i = 0; i < hintNum; i++){
@@ -128,7 +128,7 @@ public class GenerateProblem {
             usedHints[i] = hint+1;
             hintText += hint+" = "+key[hint][1]+"  ";
         }
-        System.out.println(hintText);
+        //System.out.println(hintText);
         return new String[]{ct,plaintext,hintText};
     }
     public static boolean polluxHintContains(int[] nums, int num){
@@ -160,7 +160,7 @@ public class GenerateProblem {
                 }
             }
         }
-        System.out.println(ct.substring(0,ct.length()-1));
+        //System.out.println(ct.substring(0,ct.length()-1));
         return ct.substring(0,ct.length()-1);
     }
     
