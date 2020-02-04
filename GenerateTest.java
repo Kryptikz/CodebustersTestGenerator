@@ -138,6 +138,19 @@ public class GenerateTest {
             testStrings.add(testString);
         }
         
+        for (int i = 0; i < numpollux; i++){
+            t++;
+            String[] quote = getQuote((int)(Math.random()*numquotes));
+            String plaintext = quote[0];
+            String author = quote[1];
+            String[] pollux = GenerateProblem.polluxAndMorbit(plaintext);
+            String probText = "Decode this quote by " + author + " using the pollux and morbit cipher: \n"+pollux[2]+"\n\n"+pollux[0];
+            answers.add(pollux[1]);
+            String testString = "";
+            testString = probText;
+            testStrings.add(testString);
+        }
+        
         ArrayList<String[]> testPairs = new ArrayList<String[]>();
         for (int i = 0 ; i < testStrings.size() ; i++) {
             testPairs.add(new String[]{testStrings.get(i), answers.get(i)});

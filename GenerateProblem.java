@@ -125,10 +125,12 @@ public class GenerateProblem {
             while(polluxHintContains(usedHints,hint)){
                 hint = (int)(Math.random()*10);
             }
+            hintText += key[hint][0]+" = "+key[hint][1]+"  ";
             usedHints[i] = hint+1;
-            hintText += hint+" = "+key[hint][1]+"  ";
         }
-        //System.out.println(hintText);
+        for(String[] a: key){
+            System.out.println(a[0]+" = "+a[1]);
+        }
         return new String[]{ct,plaintext,hintText};
     }
     public static boolean polluxHintContains(int[] nums, int num){
