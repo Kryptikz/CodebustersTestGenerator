@@ -73,6 +73,97 @@ public class GenerateProblem {
         return new String[]{ct, plaintext, Integer.toString(a), Integer.toString(b)};
     }
     
+    public static String[] polluxAndMorbit(String plaintext){
+        System.out.println(plaintext);
+        String morseText = morse(plaintext);
+        String ct = "";
+        String hintText = "";
+        String[][] key = new String[][]{{"-1","-1"},{"-1","-1"},{"-1","-1"},{"-1","-1"},{"-1","-1"},{"-1","-1"},{"-1","-1"},{"-1","-1"},{"-1","-1"},{"-1","-1"}};
+        for(int i = 0; i < 4; i++){
+            int num = (int)(Math.random()*10);
+            while(polluxKeyContains(key,num)){
+                num = (int)(Math.random()*10);
+            }
+            key[i][0] = Integer.toString(num);
+            key[i][1] = ".";
+        }
+        for(int i = 0; i < 3; i++){
+            int num = (int)(Math.random()*10);
+            while(polluxKeyContains(key,num)){
+                num = (int)(Math.random()*10);
+            }
+            key[4+i][0] = Integer.toString(num);
+            key[4+i][1] = "-";
+        }
+        for(int i = 0; i < 3; i++){
+            int num = (int)(Math.random()*10);
+            while(polluxKeyContains(key,num)){
+                num = (int)(Math.random()*10);
+            }
+            key[7+i][0] = Integer.toString(num);
+            key[7+i][1] = "X";
+        }
+        for(char a: morseText.toCharArray()){
+            if(a == '.'){
+                int num = (int)(Math.random()*4);
+                ct += key[num][0];
+            }
+            else if(a == '-'){
+                int num = (int)(Math.random()*3)+4;
+                ct += key[num][0];
+            }
+            else{
+                int num = (int)(Math.random()*3)+7;
+                ct += key[num][0];
+            }
+        }
+        System.out.println(ct);
+        int hintNum = (int)(Math.random()*2)+3;
+        int[] usedHints = new int[hintNum];
+        for(int i = 0; i < hintNum; i++){
+            int hint = (int)(Math.random()*10);
+            while(polluxHintContains(usedHints,hint)){
+                hint = (int)(Math.random()*10);
+            }
+            usedHints[i] = hint+1;
+            hintText += hint+" = "+key[hint][1]+"  ";
+        }
+        System.out.println(hintText);
+        return new String[]{ct,plaintext,hintText};
+    }
+    public static boolean polluxHintContains(int[] nums, int num){
+        for(int n: nums){
+            if(n-1 == num){
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean polluxKeyContains(String[][] k,int num){
+        for(int i = 0; i < k.length; i++){
+            if(k[i][0].equals(Integer.toString(num))){
+                return true;
+            }
+        }
+        return false;
+    }
+    public static String morse(String plaintext){
+        plaintext = plaintext.toLowerCase();
+        String ct = "";
+        String[][] convertionTable = new String[][]{{"a",".-"},{"b","-..."},{"c","-.-."},{"d","-.."},{"e","."},{"f","..-."},{"g","--."},{"h","...."},{"i",".."},{"j",".---"},{"k","-.-"},{"l",".-.."},{"m","--"},{"n","-."},{"o","---"},{"p",".--."},{"q","--.-"},{"r",".-."},{"s","..."},{"t","-"},{"u","..-"},{"v","...-"},{"w",".--"},{"x","-..-"},{"y","-.--"},{"z","--.."}};
+        for(char a: plaintext.toCharArray()){
+            if(Character.isLetter(a)){
+                for(String[] letters: convertionTable){
+                    if(letters[0].toLowerCase().equals(Character.toString(a))){
+                        ct += letters[1]+"x";
+                    }
+                }
+            }
+        }
+        System.out.println(ct.substring(0,ct.length()-1));
+        return ct.substring(0,ct.length()-1);
+    }
+    
     public static String[] hillMatrix(String plaintext) {
         TreeMap<Integer, Integer> dm = new TreeMap<Integer,Integer>();
         dm.put(1, 1);
