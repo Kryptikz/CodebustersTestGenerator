@@ -151,12 +151,20 @@ public class GenerateTest {
             testStrings.add(testString);
         }
         
+        for (int i = 0 ; i < numhill ; i++) {
+            t++;
+            String[] problem = GenerateProblem.hillMatrix();
+            String probText = "Find the decryption key of a hill cipher with an encryption key of \"" + problem[0] + "\" .";
+            testStrings.add(probText);
+            answers.add(problem[1]);
+        }
+        
         ArrayList<String[]> testPairs = new ArrayList<String[]>();
         for (int i = 0 ; i < testStrings.size() ; i++) {
             testPairs.add(new String[]{testStrings.get(i), answers.get(i)});
         }
         
-        Collections.shuffle(testStrings);
+        Collections.shuffle(testPairs);
         
         for (int i = 0 ; i < testPairs.size() ; i++) {
             System.out.println("\n\n" + (i + 1) + ": " + testPairs.get(i)[0]);

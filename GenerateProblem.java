@@ -166,7 +166,7 @@ public class GenerateProblem {
         return ct.substring(0,ct.length()-1);
     }
     
-    public static String[] hillMatrix(String plaintext) {
+    public static String[] hillMatrix() {
         TreeMap<Integer, Integer> dm = new TreeMap<Integer,Integer>();
         dm.put(1, 1);
         dm.put(3, 9);
@@ -183,17 +183,19 @@ public class GenerateProblem {
         //Return format: String[]{key, decryption key}
         String[] valid = {"ABLE","ABLY","ADZE","ALTO","ARTS","AXLE","BASH","BAWD","BEAR","BEEN","BEEP","BEER","BIND","BIRD","BITT","BORN","BOWL","BRAT","BULB","BUSH","DAFT","DASH","DAUB","DEAD","DEAL","DEAR","DELL","DIED","DIET","DIRT","DISH","DOTH","DOWN","DUFF","DULL","DYED","DYER","ELLS","EXPO","FACT","FALL","FAUX","FEAR","FIND","FISH","FIZZ","FLEX","FLOP","FOIL","FOOD","FOOT","FUZZ","HAIR","HARP","HASH","HEAR","HEIR","HIGH","HOAR","HOER","HOOF","HOWL","HUED","IDLY","IFFY","JAIL","JINX","JOLT","JUMP","JUST","LAID","LAIR","LAND","LEAD","LEAR","LEWD","LIMN","LIMP","LISP","LOLL","LOON","LOOP","LORD","LULL","NEXT","ODDS","ONLY","OPTS","PAID","PANT","PART","PAST","PEAL","PEER","PELF","PELT","PEND","PENT","PEON","PILL","PINT","PITH","PLED","PLOD","POET","POMP","POUT","PUFF","PULL","PUMP","RAFT","RAND","RANT","RAPT","RASH","RASP","REAP","REEL","REIN","RIFF","ROOF","RUST","TAIL","TAMP","TARP","TART","TEXT","TIED","TINT","TOAD","TOED","TOLL","TURN","TWIT","VAMP","VEAR","VIED"};
         String key = valid[(int) (Math.random() * valid.length)];
+        
         char[] temp = key.toCharArray();
         int[] vals = new int[4];
         for (int i = 0 ; i < 4 ; i++) {
             vals[i] = (temp[i] - 'A');
         }
         int[] nv = new int[4];
-        nv[0] = vals[2];
-        nv[2] = vals[0];
+        nv[0] = vals[3];
+        nv[3] = vals[0];
         nv[1] = (26 - vals[1]) % 26;
-        nv[3] = (26 - vals[3]) % 26;
-        int det = Math.abs((vals[3] - vals[0]) - (vals[2] - vals[1]));
+        nv[2] = (26 - vals[2]) % 26;
+        int det = Math.abs((vals[3] * vals[0]) - (vals[2] * vals[1]) + 2600) % 26;
+        System.out.println(det);
         int dmnt = dm.get(det);
         int[] ns = new int[4];
         for (int i = 0 ; i < 4 ; i++) {
