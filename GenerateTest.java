@@ -16,7 +16,7 @@ public class GenerateTest {
          * 0-2 vignere *need to add crib attack after
          * 1-2 baconian
          * 1-2 xenocrypt
-         * 1-3 hill cipher, 50% encrypting, 50% decrypting *need to add crib attack after
+         * 1-3 hill cipher, 30% encrypting, 30% decrypting, 40% decryption matrix
          * 1-2 pollux *need to add crib attack after
          * 1-2 morbit *need to add crib attack after
          * 1-2 RSA
@@ -152,11 +152,34 @@ public class GenerateTest {
         }
         
         for (int i = 0 ; i < numhill ; i++) {
+            double probb = Math.random();
             t++;
-            String[] problem = GenerateProblem.hillMatrix();
-            String probText = "Find the decryption key of a hill cipher with an encryption key of \"" + problem[0] + "\" .";
-            testStrings.add(probText);
-            answers.add(problem[1]);
+            if (probb <= 0.4) {
+                String[] problem = GenerateProblem.hillMatrix();
+                String probText = "Find the decryption key of a hill cipher with an encryption key of \"" + problem[0] + "\" .";
+                testStrings.add(probText);
+                answers.add(problem[1]);
+            }
+            else if (probb <= 0.7) {
+                String[] quote = getQuote((int)(Math.random()*numquotes));
+                String pt = quote[0];
+                String author = quote[1];
+                String[] problem = GenerateProblem.hillEncrypt(pt);
+                String probText = "Encode this quote by " + author + " using the hill cipher with a key of \"" + problem[1] + "\".";
+                probText = probText + "\n" + pt;
+                testStrings.add(probText);
+                answers.add(problem[0]);
+            }
+            else {
+                String[] quote = getQuote((int)(Math.random()*numquotes));
+                String pt = quote[0];
+                String author = quote[1];
+                String[] problem = GenerateProblem.hillEncrypt(pt);
+                String probText = "Decode this quote by " + author + " using the hill cipher with a key of \"" + problem[1] + "\".";
+                probText = probText + "\n" + problem[0];
+                testStrings.add(probText);
+                answers.add(pt);
+            }
         }
         
         ArrayList<String[]> testPairs = new ArrayList<String[]>();

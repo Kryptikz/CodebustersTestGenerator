@@ -209,6 +209,41 @@ public class GenerateProblem {
         return new String[]{key, s};
     }
     
+    public static String[] hillEncrypt(String plaintext) {
+        String[] valid = {"ABLE","ABLY","ADZE","ALTO","ARTS","AXLE","BASH","BAWD","BEAR","BEEN","BEEP","BEER","BIND","BIRD","BITT","BORN","BOWL","BRAT","BULB","BUSH","DAFT","DASH","DAUB","DEAD","DEAL","DEAR","DELL","DIED","DIET","DIRT","DISH","DOTH","DOWN","DUFF","DULL","DYED","DYER","ELLS","EXPO","FACT","FALL","FAUX","FEAR","FIND","FISH","FIZZ","FLEX","FLOP","FOIL","FOOD","FOOT","FUZZ","HAIR","HARP","HASH","HEAR","HEIR","HIGH","HOAR","HOER","HOOF","HOWL","HUED","IDLY","IFFY","JAIL","JINX","JOLT","JUMP","JUST","LAID","LAIR","LAND","LEAD","LEAR","LEWD","LIMN","LIMP","LISP","LOLL","LOON","LOOP","LORD","LULL","NEXT","ODDS","ONLY","OPTS","PAID","PANT","PART","PAST","PEAL","PEER","PELF","PELT","PEND","PENT","PEON","PILL","PINT","PITH","PLED","PLOD","POET","POMP","POUT","PUFF","PULL","PUMP","RAFT","RAND","RANT","RAPT","RASH","RASP","REAP","REEL","REIN","RIFF","ROOF","RUST","TAIL","TAMP","TARP","TART","TEXT","TIED","TINT","TOAD","TOED","TOLL","TURN","TWIT","VAMP","VEAR","VIED"};
+        
+        String key = valid[(int) (Math.random() * valid.length)];
+        
+        
+        int[] nv = new int[4];
+        char[] temp = key.toCharArray();
+        for (int i = 0 ; i < 4 ; i++) {
+            nv[i] = temp[i] - 'A';
+        }
+        String ans = "";
+        String ptt = "";
+        for (int i = 0 ; i < plaintext.length() ; i++) {
+            char let = plaintext.charAt(i);
+            if ((((char) let) - 'A') >= 0 && (((char) let) - 'A') <= 25) {
+                ptt += let;
+            }
+        }
+        char[] temp2 = ptt.toCharArray();
+        
+        
+        for (int i = 1 ; i < temp2.length ; i += 2) {
+            int c1 = temp2[i - 1] + 'A';
+            int c2 = temp2[i] + 'A';
+            char let1 = (char) (65 + ((c1 * nv[0] + c2 * nv[1]) % 26));
+            char let2 = (char) (65 + ((c1 * nv[2] + c2 * nv[3]) % 26));
+            ans += let1;
+            ans += let2;
+            System.out.println(let1 + " " + let2 + " " + ans);
+        }
+        
+        return new String[]{ans, key};
+    }
+    
     public static String shift(String text, int num) {
         char[] orig = text.toCharArray();
         char[] shifted = new char[orig.length];
