@@ -45,7 +45,7 @@ public class GenerateTest {
         //numaristocrats = 20;
         for(int i=0;i<numaristocrats;i++) {
             t++;
-            String[] quote = getQuote((int)(Math.random()*numquotes));
+            String[] quote = getQuote(85, 130);
             String plaintext = quote[0];
             String author = quote[1];
             boolean hint = false;
@@ -85,7 +85,7 @@ public class GenerateTest {
         
         for(int i=0;i<numpatristocrats;i++) {
             t++;
-            String[] quote = getQuote((int)(Math.random()*numquotes));
+            String[] quote = getQuote(85, 130);
             String plaintext = quote[0];
             String author = quote[1];
             boolean hint = false;
@@ -119,7 +119,7 @@ public class GenerateTest {
         
         for (int i = 0 ; i < numaffine ; i++) {
             t++;
-            String[] quote = getQuote((int)(Math.random()*numquotes));
+            String[] quote = getQuote(30, 55);
             String plaintext = quote[0];
             String author = quote[1];
             String[] aff = GenerateProblem.affine(plaintext);
@@ -140,7 +140,7 @@ public class GenerateTest {
         
         for (int i = 0; i < numpollux; i++){
             t++;
-            String[] quote = getQuote((int)(Math.random()*numquotes));
+            String[] quote = getQuote(100, 160);
             String plaintext = quote[0];
             String author = quote[1];
             String[] pollux = GenerateProblem.polluxAndMorbit(plaintext);
@@ -161,7 +161,7 @@ public class GenerateTest {
                 answers.add(problem[1]);
             }
             else if (probb <= 0.7) {
-                String[] quote = getQuote((int)(Math.random()*numquotes));
+                String[] quote = getQuote(20, 40);
                 String pt = quote[0];
                 String author = quote[1];
                 String[] problem = GenerateProblem.hillEncrypt(pt);
@@ -171,7 +171,7 @@ public class GenerateTest {
                 answers.add(problem[0]);
             }
             else {
-                String[] quote = getQuote((int)(Math.random()*numquotes));
+                String[] quote = getQuote(20, 40);
                 String pt = quote[0];
                 String author = quote[1];
                 String[] problem = GenerateProblem.hillEncrypt(pt);
@@ -211,17 +211,23 @@ public class GenerateTest {
         r.close();
         return sum;
     }
-    public static String[] getQuote(int index) throws Exception {
+    public static String[] getQuote(int low, int high) throws Exception {
         String text = "";
         String author = "";
+        
         BufferedReader tr = new BufferedReader(new FileReader(texts));
         BufferedReader ar = new BufferedReader(new FileReader(authors));
-        for(int i=0;i<index-1;i++) {
-            tr.readLine();
-            ar.readLine();
+        ArrayList<String> ts = new ArrayList<String>();
+        ArrayList<String> as = new ArrayList<String>();
+        for(int i=0;i<5000;i++) {
+            ts.add(tr.readLine());
+            as.add(ar.readLine());
         }
-        text = tr.readLine().toUpperCase();
-        author = ar.readLine();
+        while (text.length() < low || text.length() > high) {
+            int mr = (int) (Math.random() * 5000);
+            text = ts.get(mr);
+            author = as.get(mr);
+        }
         return new String[]{text,author};
     }
     public static int[] getFrequencyTable(String ciphertext) {
