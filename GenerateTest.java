@@ -121,6 +121,7 @@ public class GenerateTest {
             t++;
             String[] quote = getQuote(30, 55);
             String plaintext = quote[0];
+            System.out.println(plaintext);
             String author = quote[1];
             String[] aff = GenerateProblem.affine(plaintext);
             String probText;
@@ -225,7 +226,7 @@ public class GenerateTest {
         }
         while (text.length() < low || text.length() > high) {
             int mr = (int) (Math.random() * 5000);
-            text = ts.get(mr);
+            text = ts.get(mr).toUpperCase();
             author = as.get(mr);
         }
         return new String[]{text,author};
