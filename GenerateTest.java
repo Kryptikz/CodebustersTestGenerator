@@ -67,20 +67,21 @@ public class GenerateTest {
             answers.add(aristocrat[1]);
             String testString = "";
             testString += "" + statement + "\n";
-            testString += "\n" + aristocrat[0] + "\n";
-            testStrings.add(testString);
+            testString += "\n" + aristocrat[0] + "\n\n";
+            
             int[] freqtable = getFrequencyTable(aristocrat[0]);
             for(char c : normalAlpha) {
-                System.out.print(c + "  ");
+                testString += c + "  ";
             }
-            System.out.println();
+            testString += "\n";
             for(int num : freqtable) {
                 if ((num+"").length()>1) {
-                    System.out.print(num + " ");
+                    testString += num + " ";
                 } else {
-                    System.out.print(num + "  ");
+                    testString += num + "  ";
                 }
             }
+            testStrings.add(testString);
         }
         
         for(int i=0;i<numpatristocrats;i++) {
@@ -101,7 +102,7 @@ public class GenerateTest {
             String testString = "";
             testString += "" + statement + "\n";
             testString += "\n" + patristocrat[0] + "\n";
-            
+            testString += "\n";
             int[] freqtable = getFrequencyTable(patristocrat[0]);
             for(char c : normalAlpha) {
                 testString += c + "  ";
